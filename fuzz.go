@@ -17,7 +17,12 @@ func Fuzz(src rand.Source, entry *ast.Rule, depth int) (ast.Node, error) {
 
 func evalGrammar(rng *rand.Rand, expr ast.Node, depth int) (ast.Node, error) {
 	switch node := expr.(type) {
-	case ast.Number, ast.Bool, ast.Symbol:
+	case ast.Number, ast.Bool:
+		return node, nil
+	case ast.Symbol:
+		if node == "rnd" {
+			return ast.Number(rng.Float64()*2 - 1), nil
+		}
 		return node, nil
 	case *ast.Rule:
 		if depth <= 0 {
