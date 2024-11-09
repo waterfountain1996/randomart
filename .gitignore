@@ -17,5 +17,7 @@
 !README.md
 !LICENSE
 
+!examples/*.png
+
 # ...even if they are in subdirectories
 !*/
