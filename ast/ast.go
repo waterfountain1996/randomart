@@ -45,7 +45,7 @@ type Triple struct {
 	A, B, C Node
 }
 
-func (Triple) Kind() Kind { return KindTriple }
+func (*Triple) Kind() Kind { return KindTriple }
 
 var _ Node = (*Triple)(nil)
 
@@ -55,7 +55,7 @@ type Func1 struct {
 	Arg  Node
 }
 
-func (Func1) Kind() Kind { return KindFunc1 }
+func (*Func1) Kind() Kind { return KindFunc1 }
 
 var _ Node = (*Func1)(nil)
 
@@ -65,7 +65,7 @@ type BinOp struct {
 	Lhs, Rhs Node
 }
 
-func (BinOp) Kind() Kind { return KindBinOp }
+func (*BinOp) Kind() Kind { return KindBinOp }
 
 var _ Node = (*BinOp)(nil)
 
@@ -77,6 +77,6 @@ type IfStmt struct {
 	Else Node
 }
 
-func (IfStmt) Kind() Kind { return KindIfStmt }
+func (*IfStmt) Kind() Kind { return KindIfStmt }
 
 var _ Node = (*IfStmt)(nil)
