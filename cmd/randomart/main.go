@@ -14,7 +14,10 @@ import (
 )
 
 func main() {
-	outfile := flag.String("out", "randomart.png", "Image output file")
+	var (
+		outfile = flag.String("out", "randomart.png", "Image output file")
+		depth   = flag.Int("depth", randomart.DefaultDepth, "Expression tree depth")
+	)
 	flag.Parse()
 
 	var seed [32]byte
@@ -23,7 +26,7 @@ func main() {
 	}
 	src := rand.NewChaCha8(seed)
 
-	expr, err := randomart.Fuzz(src, randomart.Grammar, randomart.DefaultDepth)
+	expr, err := randomart.Fuzz(src, randomart.Grammar, *depth)
 	if err != nil {
 		die(fmt.Errorf("error generating an expression tree: %w", err))
 	}
