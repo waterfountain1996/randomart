@@ -10,6 +10,7 @@ const (
 	KindFunc1
 	KindBinOp
 	KindIfStmt
+	KindRule
 )
 
 type Node interface {
