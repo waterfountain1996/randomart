@@ -20,7 +20,7 @@ func eval(rng *rand.Rand, x, y float64, expr ast.Node) (ast.Node, error) {
 		case "y":
 			return ast.Number(y), nil
 		case "rnd":
-			return ast.Number(rng.Float64()), nil
+			return ast.Number(rng.Float64()*2 - 1), nil
 		default:
 			return nil, fmt.Errorf("unknown symbol: '%s'", node)
 		}
@@ -81,6 +81,8 @@ func evalFunc1(rng *rand.Rand, x, y float64, expr *ast.Func1) (ast.Node, error) 
 		return ast.Number(math.Log10(float64(a))), nil
 	case "log1p":
 		return ast.Number(math.Log1p(float64(a))), nil
+	case "sqrt":
+		return ast.Number(math.Sqrt(float64(a))), nil
 	default:
 		return nil, fmt.Errorf("func1: unknown function: %s/1", expr.Name)
 	}

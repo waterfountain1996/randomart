@@ -6,7 +6,6 @@ import (
 	"fmt"
 	"image"
 	"image/png"
-	"math/big"
 	"math/rand/v2"
 	"os"
 
@@ -24,7 +23,7 @@ func main() {
 	}
 	src := rand.NewChaCha8(seed)
 
-	expr, err := randomart.Fuzz(src, exampleGrammar(), randomart.DefaultDepth)
+	expr, err := randomart.Fuzz(src, randomart.Grammar, randomart.DefaultDepth)
 	if err != nil {
 		die(fmt.Errorf("error generating an expression tree: %w", err))
 	}
@@ -37,62 +36,6 @@ func main() {
 	if err := writeImage(*outfile, im); err != nil {
 		die(fmt.Errorf("error saving the image: %w", err))
 	}
-}
-
-func exampleGrammar() *ast.Rule {
-	a := &ast.Rule{
-		Name: "A",
-		Branches: []*ast.Branch{
-			{
-				Node:        ast.Symbol("x"),
-				Probability: big.NewRat(1, 3),
-			},
-			{
-				Node:        ast.Symbol("y"),
-				Probability: big.NewRat(1, 3),
-			},
-			{
-				Node:        ast.Symbol("rnd"),
-				Probability: big.NewRat(1, 3),
-			},
-		},
-	}
-
-	c := &ast.Rule{
-		Name:     "C",
-		Branches: make([]*ast.Branch, 0, 3),
-	}
-	c.Branches = append(c.Branches, &ast.Branch{
-		Node:        a,
-		Probability: big.NewRat(1, 4),
-	})
-	c.Branches = append(c.Branches, &ast.Branch{
-		Node: &ast.BinOp{
-			Op:  "add",
-			Lhs: c,
-			Rhs: c,
-		},
-		Probability: big.NewRat(3, 8),
-	})
-	c.Branches = append(c.Branches, &ast.Branch{
-		Node: &ast.BinOp{
-			Op:  "mul",
-			Lhs: c,
-			Rhs: c,
-		},
-		Probability: big.NewRat(3, 8),
-	})
-
-	entry := &ast.Rule{
-		Name: "E",
-		Branches: []*ast.Branch{
-			{
-				Node:        &ast.Triple{A: c, B: c, C: c},
-				Probability: big.NewRat(1, 1),
-			},
-		},
-	}
-	return entry
 }
 
 func grayscale() ast.Node {

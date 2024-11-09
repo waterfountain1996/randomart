@@ -8,7 +8,7 @@ import (
 )
 
 // Default expression tree depth.
-const DefaultDepth = 5
+const DefaultDepth = 8
 
 // Fuzz takes a grammar and produces a randomly generated expression tree of given depth.
 func Fuzz(src rand.Source, entry *ast.Rule, depth int) (ast.Node, error) {
