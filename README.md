@@ -10,6 +10,14 @@ the probabilities for different rule branches, I've managed to get a few cool lo
 ![Example image 1](./examples/1.png)
 ![Example image 2](./examples/2.png)
 
+## Installation
+
+The program can be installed by running this command:
+
+```bash
+$ go install github.com/waterfountain1996/randomart/cmd/randomart@latest
+```
+
 ## Usage
 
 ```
